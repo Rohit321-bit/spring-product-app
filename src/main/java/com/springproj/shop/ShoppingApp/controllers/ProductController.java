@@ -36,6 +36,13 @@ public class ProductController {
         return productDto.map(ResponseEntity::ok)
                 .orElseThrow(()->new ResourceNotFoundException("Can not Find Record!"));
     }
+    /**
+     * Retrieves a list of  Five Products per page.
+     *
+     * @param pageNum The page number to retrieve (starting from 0).
+     * @param sortBy Retrieve products per page ascending order by their Ids.
+     * @return An array of products on the specified page.
+     */
     @GetMapping(path="/fetchFiveProducts")
     public ResponseEntity<List<ProductEntity>> getFiveProducts(@RequestParam(defaultValue = "") String title,
                                                @RequestParam(defaultValue = "id") String sortBy,
@@ -44,6 +51,16 @@ public class ProductController {
         return ResponseEntity.ok(productService.getFiveProducts(title,sortBy,pageNum, PAGE_SIZE));
     }
 
+    /**
+     * Retrieve All The Products in a List
+     * @return An array of products
+     */
+    @GetMapping("/getAllProducts")
+    public ResponseEntity<ApiResponse<List<ProductDto>>> getAllProductList(){
+        List<ProductDto> productDtoList=productService.getAllProducts();
+        ApiResponse<List<ProductDto>> apiResponse=new ApiResponse<>(productDtoList);
+        return ResponseEntity.ok(apiResponse);
+    }
     @GetMapping(path="/getByTitle")
     public ResponseEntity<List<ProductDto>> getProdByTitle(@RequestParam(defaultValue = "") String title){
         return ResponseEntity.ok(productService.getProductByTitle(title));
@@ -64,6 +81,12 @@ public class ProductController {
         return new ResponseEntity<>(new ApiResponse<>("Could Not Delete the Product!"),HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * This method is using to update a portion of Product Object
+     * @param prodId This is Product Id
+     * @param updates This is request body which need to be updated
+     * @return Product Object
+     */
     @PatchMapping(path="/updateProduct/{prodId}")
     public ResponseEntity<ApiResponse<?>> updateProduct(@PathVariable Long prodId, @RequestBody Map<String,Object> updates){
     ProductDto productDto=productService.updatePartialProduct(prodId,updates);

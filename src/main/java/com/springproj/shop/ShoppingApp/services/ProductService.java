@@ -68,4 +68,10 @@ public class ProductService {
         boolean exists=productRepository.existsById(prodId);
         if(!exists) throw new ResourceNotFoundException("Product not found with id: "+prodId);
     }
+
+    public List<ProductDto> getAllProducts() {
+        List<ProductEntity> productEntityList=productRepository.findAll();
+        return productEntityList.stream().
+                map(e->modelMapper.map(e,ProductDto.class)).toList();
+     }
 }
