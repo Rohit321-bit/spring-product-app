@@ -8,7 +8,7 @@ efficient data handling.
 documentation and testing.
 3) Incorporated Spring Boot Actuator for application monitoring (health, info, environment) and deployed the app on AWS
 Elastic Beanstalk.
-4)Applied Spring Profiles to seamlessly switch between development and production environments. Integrated AWS RDS for
+4) Applied Spring Profiles to seamlessly switch between development and production environments. Integrated AWS RDS for
 secure, cloud-based database access and realistic production data mocking.
 
 #### Check the application through Swagger-UI
